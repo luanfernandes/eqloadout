@@ -199,3 +199,20 @@ fn get(url: &str) -> Result<String, String> {
     }
     String::from_utf8(bytes).map_err(|_| "response is not UTF-8 text".into())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Downloads the live index and one preset through the same path the dialog uses.
+    /// Needs network: `cargo test -- --ignored live_site`.
+    #[test]
+    #[ignore]
+    fn live_site() {
+        let index = preset::parse_index(&get(&format!("{}index.toml", preset::BASE_URL)).unwrap()).unwrap();
+        assert!(!index.is_empty());
+        assert!(index.iter().all(|e| e.vote_url.is_some()), "every preset should have a vote issue");
+        let text = get(&format!("{}{}", preset::BASE_URL, index[0].file)).unwrap();
+        preset::parse(&text).unwrap();
+    }
+}
