@@ -1,0 +1,178 @@
+<!doctype html>
+<!-- Template for the GitHub Pages site; .github/scripts/build_index.py fills the {{...}} placeholders. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EQ Loadout</title>
+<meta name="description" content="Per-game EQ for Equalizer APO. A tiny Windows tray app that switches your EQ profile when you alt-tab into a game, plus community presets.">
+<meta property="og:title" content="EQ Loadout">
+<meta property="og:description" content="Per-game EQ profiles for Equalizer APO.">
+<meta property="og:image" content="social.png">
+<meta name="theme-color" content="#0E1015">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #0E1015; --slot: #151820; --slot-2: #1B1F29; --rim: #2A303D; --rim-2: #3A4254;
+    --signal: #A6FF3D; --text: #E8ECF4; --muted: #9AA3B5;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--text); font: 400 16px/1.6 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, .brand { font-family: "Chakra Petch", sans-serif; font-weight: 600; letter-spacing: .3px; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; text-decoration: none; }
+  .brand img { width: 32px; height: 32px; }
+  .brand span { color: var(--signal); }
+  nav .links { display: flex; gap: 22px; font-size: 15px; }
+  nav .links a { color: var(--muted); text-decoration: none; }
+  nav .links a:hover { color: var(--text); }
+
+  .hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; padding: 56px 0 72px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.05; margin: 0 0 18px; }
+  .hero h1 em { font-style: normal; color: var(--signal); }
+  .hero p.lead { font-size: 19px; color: var(--muted); margin: 0 0 28px; max-width: 34em; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--rim-2); }
+  .btn.primary { background: var(--signal); color: #0E1015; border-color: var(--signal); }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.ghost:hover { border-color: var(--muted); }
+  .fine { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .fine a { color: var(--muted); }
+
+  /* Fader art echoing the logo */
+  .mixer { aspect-ratio: 1; max-width: 340px; justify-self: center; width: 100%; background: var(--slot); border: 2px solid var(--rim-2);
+           border-radius: 22%; display: flex; justify-content: space-evenly; padding: 18% 10%; }
+  .mixer i { position: relative; width: 6%; background: var(--rim-2); border-radius: 99px; }
+  .mixer i::after { content: ""; position: absolute; left: 50%; width: 320%; height: 15%; transform: translate(-50%, -50%);
+                    top: var(--y); background: var(--signal); border-radius: 22%; box-shadow: 0 0 24px rgba(166,255,61,.25); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--rim); }
+  h2 { font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card { background: var(--slot); border: 1px solid var(--rim); border-radius: 14px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .card .dot { display: block; width: 26px; height: 6px; border-radius: 3px; background: var(--signal); margin-bottom: 14px; }
+
+  ol.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+  ol.steps li { counter-increment: s; background: var(--slot); border: 1px solid var(--rim); border-radius: 14px; padding: 20px; }
+  ol.steps li::before { content: counter(s); font: 600 22px "Chakra Petch", sans-serif; color: var(--signal); display: block; margin-bottom: 6px; }
+  ol.steps p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  code { font: 13.5px ui-monospace, Consolas, monospace; background: var(--slot-2); border: 1px solid var(--rim); padding: 1px 6px; border-radius: 6px; color: var(--text); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .toolbar input { flex: 1 1 260px; max-width: 360px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--rim-2); background: var(--slot); color: var(--text); font: inherit; }
+  .toolbar input:focus { outline: 2px solid var(--signal); outline-offset: 1px; }
+  .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .preset { display: flex; flex-direction: column; gap: 8px; background: var(--slot); border: 1px solid var(--rim); border-radius: 14px; padding: 18px; }
+  .preset .game { font-size: 12.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+  .preset h3 { margin: 0; font-size: 17px; }
+  .preset p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
+  .preset .row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .preset .votes { font-size: 14px; color: var(--muted); margin-right: auto; }
+  .preset .votes b { color: var(--text); }
+  .preset a.small { font-size: 14px; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--rim-2); text-decoration: none; }
+  .preset a.small:hover { border-color: var(--signal); color: var(--signal); }
+  .empty { color: var(--muted); display: none; }
+
+  footer { border-top: 1px solid var(--rim); padding: 28px 0 48px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 24px; }
+    .mixer { max-width: 220px; grid-row: 1; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .presets { grid-template-columns: repeat(2, 1fr); }
+    ol.steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    nav .links a.hide-sm { display: none; }
+    .grid, .presets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#"><img src="logo.svg" alt=""> <div><span>EQ</span> Loadout</div></a>
+    <div class="links">
+      <a href="#presets">Presets</a>
+      <a class="hide-sm" href="#setup">Setup</a>
+      <a href="https://github.com/{{REPO}}">GitHub</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <h1>Per-game EQ that <em>follows your focus</em>.</h1>
+      <p class="lead">A tiny Windows tray app for Equalizer APO. Alt-tab into a game and its EQ profile switches on, alt-tab out and your default comes back.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/{{REPO}}/releases/latest/download/eqloadout.exe">Download for Windows</a>
+        <a class="btn ghost" href="https://github.com/{{REPO}}">View source</a>
+      </div>
+      <p class="fine">Free and open source (MIT). Windows 10/11, requires <a href="https://sourceforge.net/projects/equalizerapo/">Equalizer APO</a>. <a href="https://github.com/{{REPO}}/releases">All releases</a></p>
+    </div>
+    <div class="mixer" aria-hidden="true"><i style="--y:70%"></i><i style="--y:22%"></i><i style="--y:45%"></i></div>
+  </header>
+
+  <section>
+    <h2>Built to stay out of the way</h2>
+    <p class="sub">Set it up once, then forget it's running.</p>
+    <div class="grid">
+      <div class="card"><span class="dot"></span><h3>Follows focus</h3><p>Rules by exe name, window title or both. Works with Game Pass and Store games too.</p></div>
+      <div class="card"><span class="dot"></span><h3>Anti-cheat friendly</h3><p>Never opens, reads or injects into game processes. Only window APIs and system counters.</p></div>
+      <div class="card"><span class="dot"></span><h3>Featherweight</h3><p>Event driven: 0% CPU when idle and well under 1 MB of memory. One small exe, nothing to install.</p></div>
+      <div class="card"><span class="dot"></span><h3>Community presets</h3><p>Download voted EQ presets for popular games straight from the app.</p></div>
+    </div>
+  </section>
+
+  <section id="setup">
+    <h2>Setup in three steps</h2>
+    <p class="sub">Full details in the <a href="https://github.com/{{REPO}}#setup">README</a>.</p>
+    <ol class="steps">
+      <li><p>In your Equalizer APO <code>config.txt</code>, add <code>Include: game.txt</code> after your headphone correction, and give your account Modify permission on the config folder.</p></li>
+      <li><p>Run EQ Loadout, open <b>Settings</b> from the tray icon and use <b>Get presets</b> to grab a preset for your game.</p></li>
+      <li><p>Add a rule: pick the game from the running-app list and choose the preset as its profile. That's it.</p></li>
+    </ol>
+  </section>
+
+  <section id="presets">
+    <div class="toolbar">
+      <div>
+        <h2>Presets</h2>
+        <p class="sub" style="margin:0">{{COUNT}} presets, most voted first. They go on top of your headphone correction.</p>
+      </div>
+      <input id="q" type="search" placeholder="Filter by game or name" aria-label="Filter presets">
+    </div>
+    <div class="presets" id="list">
+{{PRESETS}}
+    </div>
+    <p class="empty" id="empty">No presets match.</p>
+    <p class="fine">Have a better curve? <a href="https://github.com/{{REPO}}/issues/new?template=preset.yml">Submit a preset</a>. Vote with 👍 on a preset's vote issue; votes are counted daily.</p>
+  </section>
+
+  <footer>
+    <div>EQ Loadout is MIT licensed. Not affiliated with Equalizer APO.</div>
+    <div><a href="https://github.com/{{REPO}}">GitHub</a> · <a href="https://github.com/{{REPO}}/releases">Releases</a> · <a href="index.toml">index.toml</a></div>
+  </footer>
+</div>
+<script>
+  const q = document.getElementById("q"), cards = [...document.querySelectorAll(".preset")], empty = document.getElementById("empty");
+  q.addEventListener("input", () => {
+    const t = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) { const hit = c.dataset.search.includes(t); c.hidden = !hit; shown += hit; }
+    empty.style.display = shown ? "none" : "block";
+  });
+</script>
+</body>
+</html>

@@ -90,13 +90,22 @@ for votes, name, m, url in entries:
     if url:
         lines.append(f"vote_url = {toml_str(url)}")
     lines.append("")
-    vote = f' (<a href="{html.escape(url)}">vote</a>)' if url else ""
-    rows.append(f'<li><a href="{name}">{html.escape(m.get("game", "Any game"))}: {html.escape(m["name"])}</a> {votes} 👍{vote}</li>')
+    game = m.get("game", "(any)")
+    game = "Any game" if game == "(any)" else game
+    vote = f'<a class="small" href="{html.escape(url)}">Vote 👍</a>' if url else ""
+    search = html.escape(f"{game} {m['name']} {m.get('notes', '')}".lower())
+    rows.append(
+        f'      <article class="preset" data-search="{search}"><div class="game">{html.escape(game)}</div>'
+        f'<h3>{html.escape(m["name"])}</h3><p>{html.escape(m.get("notes", ""))}</p>'
+        f'<div class="row"><span class="votes"><b>{votes}</b> votes</span>{vote}'
+        f'<a class="small" href="{name}" download>Download</a></div></article>'
+    )
 (out / "index.toml").write_text("\n".join(lines), encoding="utf-8")
-(out / "index.html").write_text(
-    "<!doctype html><meta charset=utf-8><title>EQ Loadout presets</title>"
-    "<h1>EQ Loadout presets</h1><p>Download presets from EQ Loadout's <b>Get presets</b> button, "
-    f'or grab a file below. <a href="https://github.com/{repo}">Project page</a></p><ul>{"".join(rows)}</ul>',
-    encoding="utf-8",
-)
+
+root = pathlib.Path(__file__).resolve().parents[2]
+page = (root / ".github" / "site" / "index.html").read_text(encoding="utf-8")
+page = page.replace("{{PRESETS}}", "\n".join(rows)).replace("{{COUNT}}", str(len(entries))).replace("{{REPO}}", repo)
+(out / "index.html").write_text(page, encoding="utf-8")
+for asset in ("logo.svg", "social.png"):
+    shutil.copy(root / "docs" / "brand" / asset, out / asset)
 print(f"{len(entries)} presets written to {out}")
