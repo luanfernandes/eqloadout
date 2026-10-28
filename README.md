@@ -53,7 +53,7 @@ When nothing matches, it writes your default profile, or a comment line if you h
    Filter: ON PK Fc 4000 Hz Gain 3 dB Q 1.4
    ```
 
-4. **Run EQ Loadout.** Copy `eqloadout.exe` somewhere permanent and run it. Right-click the tray icon to open **Settings** and add rules. Turn on **Start with Windows** from the same menu. It adds a value under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points at the exe you enabled it from.
+4. **Run EQ Loadout.** Download `eqloadout.exe` from [Releases](https://github.com/luanfernandes/eqloadout/releases), copy it somewhere permanent and run it. Right-click the tray icon to open **Settings** and add rules. Turn on **Start with Windows** from the same menu. It adds a value under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points at the exe you enabled it from.
 
 ## Rules
 
@@ -116,3 +116,7 @@ eqloadout --list-apps
 ## Planned
 
 - Reload `config.toml` automatically when it is edited by hand.
+
+## License
+
+[MIT](LICENSE)
