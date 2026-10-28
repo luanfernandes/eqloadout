@@ -43,7 +43,7 @@ pub fn valid_profile(name: &str) -> bool {
         && !name.contains(['/', '\\', ':', '\r', '\n'])
 }
 
-pub const NO_PROFILE: &str = "# eqswitch: no profile active\n";
+pub const NO_PROFILE: &str = "# EQ Loadout: no profile active\n";
 
 #[derive(Debug, PartialEq)]
 pub struct Outcome {

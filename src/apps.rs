@@ -112,7 +112,7 @@ pub fn sort(apps: &mut [App]) {
     apps.sort_by(|a, b| b.score().total_cmp(&a.score()).then_with(|| a.exe.to_lowercase().cmp(&b.exe.to_lowercase())));
 }
 
-/// `eqswitch --list-apps`: prints the ranked list so the heuristics can be checked.
+/// `eqloadout --list-apps`: prints the ranked list so the heuristics can be checked.
 pub fn print_ranked() {
     let mut apps = list();
     match gpu::sample_3d() {

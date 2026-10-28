@@ -9,10 +9,7 @@ use std::{
 
 use windows_sys::Win32::{
     Foundation::{HWND, LPARAM, MAX_PATH, WPARAM},
-    System::{
-        Com::CoTaskMemFree,
-        Threading::{GetCurrentProcess, SetProcessWorkingSetSize},
-    },
+    System::Com::CoTaskMemFree,
     UI::{
         Controls::{NM_DBLCLK, NMHDR},
         Shell::{BFFM_INITIALIZED, BFFM_SETSELECTIONW, BIF_NEWDIALOGSTYLE, BIF_RETURNONLYFSDIRS, BROWSEINFOW, SHBrowseForFolderW, SHGetPathFromIDListW},
@@ -87,8 +84,7 @@ unsafe extern "system" fn proc(h: HWND, msg: u32, wp: WPARAM, lp: LPARAM) -> isi
         WM_DESTROY => {
             HWND_.set(null_mut());
             STATE.set(None);
-            // Give back the memory the dialog and common controls touched.
-            unsafe { SetProcessWorkingSetSize(GetCurrentProcess(), usize::MAX, usize::MAX) };
+            ui::trim_memory();
             0
         }
         _ => 0,

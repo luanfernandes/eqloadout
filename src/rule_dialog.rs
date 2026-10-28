@@ -205,7 +205,7 @@ fn capture(h: HWND) {
     let msg = if fg.is_null() {
         "No window had focus. Try again.".to_string()
     } else if pid == unsafe { GetCurrentProcessId() } {
-        "eqswitch itself had focus. Click Capture, then switch to the app.".to_string()
+        "EQ Loadout itself had focus. Click Capture, then switch to the app.".to_string()
     } else {
         match focus::resolve(fg) {
             Some(f) if !f.exe.is_empty() => {

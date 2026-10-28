@@ -1,4 +1,6 @@
-# eqswitch
+<p align="center"><img src="docs/brand/banner.png" alt="EQ Loadout"></p>
+
+# EQ Loadout
 
 A small Windows tray app that switches your [Equalizer APO](https://sourceforge.net/projects/equalizerapo/) EQ profile based on which application has focus. Focus a game and its profile is applied; alt-tab away and you get your default back.
 
@@ -8,7 +10,7 @@ A small Windows tray app that switches your [Equalizer APO](https://sourceforge.
 
 ## Anti-cheat safety
 
-eqswitch never opens a handle to another process, reads its memory, enumerates its modules or injects anything. Process information comes only from:
+EQ Loadout never opens a handle to another process, reads its memory, enumerates its modules or injects anything. Process information comes only from:
 
 - `CreateToolhelp32Snapshot` (exe names)
 - window APIs (`GetWindowThreadProcessId`, `GetWindowTextW`, `GetClassNameW`, `GetWindowRect`, `IsWindowVisible`, `EnumWindows`, `EnumChildWindows`, `DwmGetWindowAttribute`)
@@ -17,7 +19,7 @@ eqswitch never opens a handle to another process, reads its memory, enumerates i
 
 ## How it works
 
-Equalizer APO reloads its configuration whenever a file in its config folder changes. You add one line to `config.txt` that includes `game.txt`. eqswitch then rewrites `game.txt` to include the profile of the matching rule:
+Equalizer APO reloads its configuration whenever a file in its config folder changes. You add one line to `config.txt` that includes `game.txt`. EQ Loadout then rewrites `game.txt` to include the profile of the matching rule:
 
 ```
 Include: cs2.txt
@@ -35,7 +37,7 @@ When nothing matches, it writes your default profile, or a comment line if you h
    Include: game.txt
    ```
 
-   Equalizer tools such as Peace may rewrite `config.txt`. If the line disappears, eqswitch shows a warning in the settings window.
+   Equalizer tools such as Peace may rewrite `config.txt`. If the line disappears, EQ Loadout shows a warning in the settings window.
 
 2. **Allow writing to the config folder.** The folder is under Program Files, so normal users can't write to it. Give your account Modify permission once, from an administrator command prompt:
 
@@ -51,7 +53,7 @@ When nothing matches, it writes your default profile, or a comment line if you h
    Filter: ON PK Fc 4000 Hz Gain 3 dB Q 1.4
    ```
 
-4. **Run eqswitch.** Copy `eqswitch.exe` somewhere permanent and run it. Right-click the tray icon to open **Settings** and add rules. Turn on **Start with Windows** from the same menu. It adds a value under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points at the exe you enabled it from.
+4. **Run EQ Loadout.** Copy `eqloadout.exe` somewhere permanent and run it. Right-click the tray icon to open **Settings** and add rules. Turn on **Start with Windows** from the same menu. It adds a value under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points at the exe you enabled it from.
 
 ## Rules
 
@@ -63,11 +65,11 @@ The rule dialog helps you fill in the fields:
 - **Capture focused app** waits 5 seconds, then reads whichever window has focus.
 - **Select exe...** opens a file picker. It starts in your Steam library's `steamapps\common` folder if Steam is installed.
 
-Store apps and Game Pass games run inside `ApplicationFrameHost.exe`. eqswitch resolves the app behind that host, so rules use the real exe name.
+Store apps and Game Pass games run inside `ApplicationFrameHost.exe`. EQ Loadout resolves the app behind that host, so rules use the real exe name.
 
 ## Configuration file
 
-Settings live in `%APPDATA%\eqswitch\config.toml`. The file is created on first run.
+Settings live in `%APPDATA%\eqloadout\config.toml`. The file is created on first run.
 
 ```toml
 eapo_config_dir = 'C:\Program Files\EqualizerAPO\config'
@@ -82,7 +84,7 @@ title = "Minecraft"
 profile = "minecraft.txt"
 ```
 
-`eapo_config_dir` defaults to the `ConfigPath` value under `HKLM\SOFTWARE\EqualizerAPO`. If the file is broken, eqswitch keeps running with defaults, shows the error in the settings window and leaves the file untouched. Edits made by hand are picked up on the next start. Edits made in the settings window apply as soon as you save.
+`eapo_config_dir` defaults to the `ConfigPath` value under `HKLM\SOFTWARE\EqualizerAPO`. If the file is broken, EQ Loadout keeps running with defaults, shows the error in the settings window and leaves the file untouched. Edits made by hand are picked up on the next start. Edits made in the settings window apply as soon as you save.
 
 ## Building
 
@@ -96,7 +98,7 @@ cargo test
 Debug builds keep a console and log every focus change and write. Ctrl+C quits cleanly. To print the ranked app list used by the picker:
 
 ```
-eqswitch --list-apps
+eqloadout --list-apps
 ```
 
 ## Manual test checklist
@@ -105,9 +107,9 @@ eqswitch --list-apps
 - [ ] Title change while focused: a title-only rule starts matching when the game changes its window title after launch.
 - [ ] Close the game: the next focused app gets the default profile.
 - [ ] A Game Pass or Store game: the rule matches its real exe, not `ApplicationFrameHost.exe`.
-- [ ] Pause from the tray: the default is written once and focus changes are ignored. Resume: the current window is matched again.
-- [ ] Unwritable config folder (remove the Modify permission): the settings status line and the tooltip say the folder needs Modify permission, and the app keeps running.
-- [ ] Missing profile file (rename a rule's profile): the default is applied and a warning appears in the tooltip and the settings window.
+- [ ] Pause from the tray: the tray icon turns grey, the default is written once and focus changes are ignored. Resume: the icon turns green and the current window is matched again.
+- [ ] Unwritable config folder (remove the Modify permission): the tray icon turns amber, the settings status line and the tooltip say the folder needs Modify permission, and the app keeps running.
+- [ ] Missing profile file (rename a rule's profile): the default is applied, the tray icon turns amber and a warning appears in the tooltip and the settings window.
 - [ ] Start a second copy: the settings window of the running copy opens.
 - [ ] Quit: `game.txt` is commented out.
 

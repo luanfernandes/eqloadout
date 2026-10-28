@@ -3,12 +3,14 @@
 #include "ids.h"
 
 1 RT_MANIFEST "app.manifest"
-1 ICON "eqswitch.ico"
+1 ICON "eqloadout.ico"
+2 ICON "paused.ico"
+3 ICON "warning.ico"
 
 IDD_SETTINGS DIALOGEX 0, 0, 400, 262
 STYLE DS_SETFONT | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "eqswitch settings"
+CAPTION "EQ Loadout settings"
 FONT 9, "Segoe UI"
 BEGIN
     LTEXT           "Equalizer APO config folder:", -1, 7, 8, 200, 8

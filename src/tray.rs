@@ -21,13 +21,14 @@ use windows_sys::Win32::{
 
 use crate::{config, settings, ui, wide, with_switcher};
 
-const CLASS: &str = "eqswitch_tray";
+const CLASS: &str = "eqloadout_tray";
 const RUN_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Run";
 
 thread_local! {
     static HWND_: Cell<HWND> = const { Cell::new(null_mut()) };
-    static TIP: RefCell<String> = RefCell::new("eqswitch".into());
+    static TIP: RefCell<String> = RefCell::new("EQ Loadout".into());
     static TASKBAR_CREATED: Cell<u32> = const { Cell::new(0) };
+    static ICON: Cell<u16> = const { Cell::new(ui::ICON_APP) };
 }
 
 pub fn create() -> Result<(), String> {
@@ -55,11 +56,13 @@ pub fn signal_existing() -> bool {
     }
 }
 
-pub fn set_tip(tip: &str) {
-    if TIP.with_borrow(|t| t == tip) {
+/// Updates the tooltip and the icon (one of the `ui::ICON_*` resources).
+pub fn set_state(tip: &str, icon: u16) {
+    if ICON.get() == icon && TIP.with_borrow(|t| t == tip) {
         return;
     }
     TIP.set(tip.to_string());
+    ICON.set(icon);
     notify(NIM_MODIFY);
 }
 
@@ -79,7 +82,7 @@ fn notify(op: u32) {
         nid.uID = 1;
         nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
         nid.uCallbackMessage = ui::WM_APP_TRAY;
-        nid.hIcon = ui::icon(true);
+        nid.hIcon = ui::icon(ICON.get(), true);
         TIP.with_borrow(|t| {
             let w: Vec<u16> = t.encode_utf16().take(nid.szTip.len() - 1).collect();
             nid.szTip[..w.len()].copy_from_slice(&w);
@@ -141,11 +144,11 @@ fn menu(h: HWND) {
 }
 
 fn startup_enabled() -> bool {
-    config::reg_string(HKEY_CURRENT_USER, RUN_KEY, "eqswitch").is_some()
+    config::reg_string(HKEY_CURRENT_USER, RUN_KEY, "eqloadout").is_some()
 }
 
 fn set_startup(on: bool) -> Result<(), String> {
-    let (key, name) = (wide(RUN_KEY), wide("eqswitch"));
+    let (key, name) = (wide(RUN_KEY), wide("eqloadout"));
     let rc = unsafe {
         if on {
             let exe = std::env::current_exe().map_err(|e| e.to_string())?;

@@ -1,11 +1,14 @@
 //! Shared Win32 helpers for the dialogs. Control IDs mirror res/ids.h.
 
-use std::{mem::zeroed, ptr::null};
+use std::{cell::RefCell, mem::zeroed, ptr::null};
 
 use windows_sys::{
     Win32::{
         Foundation::{HINSTANCE, HWND, LPARAM, RECT, WPARAM},
-        System::LibraryLoader::GetModuleHandleW,
+        System::{
+            LibraryLoader::GetModuleHandleW,
+            Threading::{GetCurrentProcess, SetProcessWorkingSetSize},
+        },
         UI::{
             Controls::{
                 LIM_LARGE, LIM_SMALL, LVCF_TEXT, LVCF_WIDTH, LVCOLUMNW, LVIF_TEXT, LVIS_FOCUSED, LVIS_SELECTED, LVITEMW,
@@ -51,6 +54,11 @@ pub const WM_APP_TRAY: u32 = WM_APP + 1;
 pub const WM_APP_SHOW_SETTINGS: u32 = WM_APP + 2;
 pub const WM_APP_GPU: u32 = WM_APP + 3;
 
+/// Drops pages touched during startup or by a closed dialog; they page back in only if used again.
+pub fn trim_memory() {
+    unsafe { SetProcessWorkingSetSize(GetCurrentProcess(), usize::MAX, usize::MAX) };
+}
+
 pub fn hinstance() -> HINSTANCE {
     unsafe { GetModuleHandleW(null()) }
 }
@@ -60,16 +68,30 @@ pub fn res(id: u16) -> PCWSTR {
     id as usize as PCWSTR
 }
 
-pub fn icon(small: bool) -> HICON {
+/// Icon resource IDs in res/eqloadout.rc.
+pub const ICON_APP: u16 = 1;
+pub const ICON_PAUSED: u16 = 2;
+pub const ICON_WARNING: u16 = 3;
+
+thread_local! {
+    static ICONS: RefCell<Vec<((u16, bool), HICON)>> = const { RefCell::new(Vec::new()) };
+}
+
+/// Loaded once per (id, size) and kept for the process lifetime, so repeated tray updates don't leak handles.
+pub fn icon(id: u16, small: bool) -> HICON {
+    if let Some(h) = ICONS.with_borrow(|c| c.iter().find(|(k, _)| *k == (id, small)).map(|(_, h)| *h)) {
+        return h;
+    }
     let mut h = std::ptr::null_mut();
-    unsafe { LoadIconMetric(hinstance(), res(1), if small { LIM_SMALL } else { LIM_LARGE }, &mut h) };
+    unsafe { LoadIconMetric(hinstance(), res(id), if small { LIM_SMALL } else { LIM_LARGE }, &mut h) };
+    ICONS.with_borrow_mut(|c| c.push(((id, small), h)));
     h
 }
 
 pub fn set_dialog_icon(dlg: HWND) {
     unsafe {
-        SendMessageW(dlg, WM_SETICON, ICON_SMALL as WPARAM, icon(true) as LPARAM);
-        SendMessageW(dlg, WM_SETICON, ICON_BIG as WPARAM, icon(false) as LPARAM);
+        SendMessageW(dlg, WM_SETICON, ICON_SMALL as WPARAM, icon(ICON_APP, true) as LPARAM);
+        SendMessageW(dlg, WM_SETICON, ICON_BIG as WPARAM, icon(ICON_APP, false) as LPARAM);
     }
 }
 
@@ -88,7 +110,7 @@ pub fn set_text(dlg: HWND, id: i32, s: &str) {
 }
 
 pub fn warn(owner: HWND, msg: &str) {
-    unsafe { MessageBoxW(owner, wide(msg).as_ptr(), wide("eqswitch").as_ptr(), MB_OK | MB_ICONWARNING) };
+    unsafe { MessageBoxW(owner, wide(msg).as_ptr(), wide("EQ Loadout").as_ptr(), MB_OK | MB_ICONWARNING) };
 }
 
 /// Fills a drop-down list and selects `select` (by index into `items`).

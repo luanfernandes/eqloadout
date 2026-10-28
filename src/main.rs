@@ -126,11 +126,18 @@ impl Switcher {
         self.summary = summary;
         self.write(out.content);
 
-        let mut tip = format!("eqswitch: {}", self.summary);
+        let mut tip = format!("EQ Loadout: {}", self.summary);
         for w in self.write_error.iter().chain(&self.warning) {
             tip = tip + "\n" + w;
         }
-        tray::set_tip(&tip);
+        let icon = if self.paused {
+            ui::ICON_PAUSED
+        } else if self.write_error.is_some() || self.warning.is_some() {
+            ui::ICON_WARNING
+        } else {
+            ui::ICON_APP
+        };
+        tray::set_state(&tip, icon);
     }
 
     fn write(&mut self, content: String) {
@@ -183,9 +190,9 @@ fn main() {
         return;
     }
 
-    let _mutex = unsafe { CreateMutexW(null(), 0, wide("Local\\eqswitch-single-instance").as_ptr()) };
+    let _mutex = unsafe { CreateMutexW(null(), 0, wide("Local\\eqloadout-single-instance").as_ptr()) };
     if unsafe { GetLastError() } == ERROR_ALREADY_EXISTS {
-        log!("eqswitch is already running, opening its settings");
+        log!("EQ Loadout is already running, opening its settings");
         tray::signal_existing();
         return;
     }
@@ -222,6 +229,8 @@ fn main() {
     }
     if show_settings {
         settings::open(); // surface a broken config right away
+    } else {
+        ui::trim_memory();
     }
     #[cfg(debug_assertions)]
     debug_ctrl_c::install();

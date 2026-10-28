@@ -7,7 +7,7 @@ use crate::wide;
 /// Writes a sibling temp file, then swaps it in so readers never see a partial file.
 pub fn write_atomic(target: &Path, content: &str) -> io::Result<()> {
     let mut tmp = target.as_os_str().to_owned();
-    tmp.push(".eqswitch.tmp");
+    tmp.push(".eqloadout.tmp");
     fs::write(&tmp, content)?;
     let ok = unsafe { MoveFileExW(wide(&tmp).as_ptr(), wide(target).as_ptr(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) };
     if ok == 0 {
@@ -47,9 +47,9 @@ mod tests {
 
     #[test]
     fn lists_profiles() {
-        let dir = std::env::temp_dir().join(format!("eqswitch-profiles-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("eqloadout-profiles-{}", std::process::id()));
         fs::create_dir_all(dir.join("sub.txt")).unwrap();
-        for f in ["config.txt", "game.txt", "b.txt", "A.txt", "notes.md", "game.txt.eqswitch.tmp"] {
+        for f in ["config.txt", "game.txt", "b.txt", "A.txt", "notes.md", "game.txt.eqloadout.tmp"] {
             fs::write(dir.join(f), "").unwrap();
         }
         assert_eq!(list_profiles(&dir), ["A.txt", "b.txt"]);
@@ -58,7 +58,7 @@ mod tests {
 
     #[test]
     fn atomic_write_creates_and_replaces() {
-        let dir = std::env::temp_dir().join(format!("eqswitch-test-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("eqloadout-test-{}", std::process::id()));
         fs::create_dir_all(&dir).unwrap();
         let target = dir.join("game.txt");
         write_atomic(&target, "one\n").unwrap();
@@ -70,7 +70,7 @@ mod tests {
 
     #[test]
     fn atomic_write_reports_missing_dir() {
-        let target = std::env::temp_dir().join("eqswitch-no-such-dir").join("game.txt");
+        let target = std::env::temp_dir().join("eqloadout-no-such-dir").join("game.txt");
         assert!(write_atomic(&target, "x").is_err());
     }
 

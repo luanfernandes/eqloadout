@@ -45,7 +45,7 @@ impl Config {
 }
 
 pub fn path() -> Option<PathBuf> {
-    std::env::var_os("APPDATA").map(|d| PathBuf::from(d).join("eqswitch").join("config.toml"))
+    std::env::var_os("APPDATA").map(|d| PathBuf::from(d).join("eqloadout").join("config.toml"))
 }
 
 /// Never fails: on any problem it returns defaults plus a message for the UI.
