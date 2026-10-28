@@ -29,6 +29,7 @@ use crate::wide;
 
 pub const IDD_SETTINGS: u16 = 100;
 pub const IDD_RULE: u16 = 101;
+pub const IDD_PRESETS: u16 = 102;
 
 pub const IDC_DIR: i32 = 1001;
 pub const IDC_BROWSE: i32 = 1002;
@@ -40,6 +41,13 @@ pub const IDC_UP: i32 = 1007;
 pub const IDC_DOWN: i32 = 1008;
 pub const IDC_DEFAULT: i32 = 1009;
 pub const IDC_STATUS: i32 = 1010;
+pub const IDC_GET_PRESETS: i32 = 1011;
+
+pub const IDC_PRESET_LIST: i32 = 1201;
+pub const IDC_PRESET_NOTES: i32 = 1202;
+pub const IDC_PRESET_STATUS: i32 = 1203;
+pub const IDC_PRESET_DOWNLOAD: i32 = 1204;
+pub const IDC_PRESET_VOTE: i32 = 1205;
 
 pub const IDC_EXE: i32 = 1101;
 pub const IDC_PICKEXE: i32 = 1102;
@@ -53,6 +61,7 @@ pub const IDC_CAPTURE_STATUS: i32 = 1108;
 pub const WM_APP_TRAY: u32 = WM_APP + 1;
 pub const WM_APP_SHOW_SETTINGS: u32 = WM_APP + 2;
 pub const WM_APP_GPU: u32 = WM_APP + 3;
+pub const WM_APP_FETCHED: u32 = WM_APP + 4;
 
 /// Drops pages touched during startup or by a closed dialog; they page back in only if used again.
 pub fn trim_memory() {

@@ -22,7 +22,7 @@ use windows_sys::Win32::{
 
 use crate::{
     config::{self, Config},
-    eapo, rule_dialog,
+    eapo, presets_dialog, rule_dialog,
     rules::Rule,
     ui::{self, *},
     wide, with_switcher,
@@ -127,6 +127,14 @@ fn command(h: HWND, id: i32, code: u32) {
             }
         }
         IDC_EDIT => edit(h),
+        IDC_GET_PRESETS => {
+            let dir = current_dir(h);
+            if !dir.is_dir() {
+                return ui::warn(h, "Choose the Equalizer APO config folder first.");
+            }
+            presets_dialog::run(h, dir);
+            refresh_profiles(h, selected_default(h)); // show newly downloaded files
+        }
         IDC_REMOVE => {
             if let Some(i) = lv_selected(item(h, IDC_RULES)) {
                 let next = update(|s| {

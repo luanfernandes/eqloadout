@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Hunt: Showdown 1896
-# exe: HuntGame.exe
 # steam_appid: 594650
 # notes: Footsteps vary a lot by surface (wood is low), so this stays gentle.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

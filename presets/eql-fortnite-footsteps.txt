@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Fortnite
-# exe: FortniteClient-Win64-Shipping.exe
 # notes: Generic shooter shape: less boom, more presence.
 # Apply on top of your headphone correction. Starting point: adjust by ear.
 Preamp: -2.5 dB

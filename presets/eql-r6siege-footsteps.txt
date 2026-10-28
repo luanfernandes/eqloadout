@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps and vertical cues
 # game: Rainbow Six Siege
-# exe: RainbowSix.exe, RainbowSix_Vulkan.exe
 # steam_appid: 359550
 # notes: Steps above you are bassy (~200 Hz), below you trebly. Keeps both while cutting rumble.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

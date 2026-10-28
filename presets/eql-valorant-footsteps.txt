@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: VALORANT
-# exe: VALORANT-Win64-Shipping.exe
 # notes: Valorant footsteps sit lower than most shooters, so the low thud is kept and lifted slightly.
 # Apply on top of your headphone correction. Starting point: adjust by ear.
 Preamp: -2.0 dB

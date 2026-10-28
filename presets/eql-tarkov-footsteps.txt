@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Escape from Tarkov
-# exe: EscapeFromTarkov.exe
 # notes: Tames loud gunfire low end, lifts 4 kHz, trims top-end hiss.
 # Apply on top of your headphone correction. Starting point: adjust by ear.
 Preamp: -3.0 dB

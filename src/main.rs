@@ -10,9 +10,8 @@ mod config;
 mod eapo;
 mod focus;
 mod gpu;
-// shortcut: only the tests use it until the in-app "Get preset" download lands.
-#[cfg_attr(not(test), allow(dead_code))]
 mod preset;
+mod presets_dialog;
 mod rule_dialog;
 mod rules;
 mod settings;

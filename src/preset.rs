@@ -4,18 +4,24 @@
 //! Only EQ lines are allowed: `Preamp`, `Filter` (PK/LS/HS) and `GraphicEQ`. Anything that could
 //! load code or other files (`VSTPlugin`, `Include`, `Device`, `Eval`, ...) is rejected.
 
+use serde::Deserialize;
+
 pub const MAGIC: &str = "# eqloadout-preset: 1";
+/// GitHub Pages site built by .github/workflows/presets.yml: index.toml plus the preset files.
+pub const BASE_URL: &str = "https://luanfernandes.github.io/eqloadout/";
+const VOTE_URL_PREFIX: &str = "https://github.com/luanfernandes/eqloadout/issues/";
 const MAX_BYTES: usize = 8 * 1024;
 const MAX_FILTERS: usize = 32;
 const MAX_GAIN_DB: f64 = 12.0;
 /// Preamp must cover the largest boost, allowing this much slack.
 const HEADROOM_SLACK_DB: f64 = 0.5;
 
+/// Fields are read by the tests; the app only needs the validation verdict.
+#[cfg_attr(not(test), allow(dead_code))]
 #[derive(Debug, Default, PartialEq)]
 pub struct Preset {
     pub name: String,
     pub game: Option<String>,
-    pub exes: Vec<String>,
     pub steam_appid: Option<u32>,
     pub notes: String,
 }
@@ -46,7 +52,6 @@ pub fn parse(text: &str) -> Result<Preset, String> {
                 match k.trim() {
                     "name" => p.name = v,
                     "game" => p.game = (v != "(any)").then_some(v),
-                    "exe" => p.exes = v.split(',').map(|e| e.trim().to_string()).filter(|e| !e.is_empty()).collect(),
                     "steam_appid" => p.steam_appid = Some(v.parse().map_err(|_| err("steam_appid must be a number"))?),
                     "notes" => p.notes = v,
                     _ => {}
@@ -87,14 +92,52 @@ pub fn parse(text: &str) -> Result<Preset, String> {
     if filters > MAX_FILTERS {
         return Err(format!("more than {MAX_FILTERS} filters"));
     }
-    if p.exes.iter().any(|e| !e.to_ascii_lowercase().ends_with(".exe") || e.contains(['/', '\\', ':'])) {
-        return Err("exe must be plain file names ending in .exe".into());
-    }
     let preamp = preamp.unwrap_or(0.0);
     if preamp + max_boost > HEADROOM_SLACK_DB {
         return Err(format!("Preamp {preamp} dB does not cover the largest boost (+{max_boost} dB); it would clip"));
     }
     Ok(p)
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct IndexEntry {
+    pub file: String,
+    pub name: String,
+    #[serde(default)]
+    pub game: Option<String>,
+    #[serde(default)]
+    pub notes: String,
+    #[serde(default)]
+    pub votes: u32,
+    #[serde(default)]
+    pub vote_url: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct Index {
+    #[serde(default)]
+    presets: Vec<IndexEntry>,
+}
+
+/// Parses the downloaded index. Entries with unsafe file names are dropped, foreign vote links cleared.
+pub fn parse_index(s: &str) -> Result<Vec<IndexEntry>, String> {
+    let mut list: Vec<IndexEntry> = toml::from_str::<Index>(s)
+        .map_err(|e| format!("index.toml is invalid: {e}"))?
+        .presets
+        .into_iter()
+        .filter(|e| valid_file_name(&e.file))
+        .map(|mut e| {
+            if !e.vote_url.as_deref().is_some_and(|u| u.starts_with(VOTE_URL_PREFIX)) {
+                e.vote_url = None;
+            }
+            e
+        })
+        .collect();
+    // Most votes first; genre presets (no game) after game presets on ties.
+    list.sort_by(|a, b| {
+        b.votes.cmp(&a.votes).then_with(|| a.game.is_none().cmp(&b.game.is_none())).then_with(|| a.game.cmp(&b.game)).then_with(|| a.name.cmp(&b.name))
+    });
+    Ok(list)
 }
 
 /// True for names like `eql-cs2-footsteps.txt`, the form presets are installed under.
@@ -152,7 +195,7 @@ fn check_gain(g: f64) -> Result<(), String> {
 mod tests {
     use super::*;
 
-    const OK: &str = "# eqloadout-preset: 1\n# name: Footsteps\n# game: Counter-Strike 2\n# exe: cs2.exe\n# steam_appid: 730\n\
+    const OK: &str = "# eqloadout-preset: 1\n# name: Footsteps\n# game: Counter-Strike 2\n# steam_appid: 730\n\
                       Preamp: -2.0 dB\nFilter: ON LS Fc 160 Hz Gain -2.5 dB Q 0.70\nFilter: ON PK Fc 4000 Hz Gain 2.0 dB Q 1.20\n";
 
     fn with(extra: &str) -> String {
@@ -162,7 +205,7 @@ mod tests {
     #[test]
     fn accepts_valid_preset() {
         let p = parse(OK).unwrap();
-        assert_eq!((p.name.as_str(), p.game.as_deref(), p.exes.as_slice(), p.steam_appid), ("Footsteps", Some("Counter-Strike 2"), &["cs2.exe".to_string()][..], Some(730)));
+        assert_eq!((p.name.as_str(), p.game.as_deref(), p.steam_appid), ("Footsteps", Some("Counter-Strike 2"), Some(730)));
         assert!(parse(&with("GraphicEQ: 25 0; 1000 -1.5; 8000 2")).is_ok());
     }
 
@@ -199,7 +242,6 @@ mod tests {
     fn rejects_bad_headers() {
         assert!(parse(&OK.replace(MAGIC, "# something else")).is_err());
         assert!(parse(&OK.replace("# name: Footsteps\n", "")).is_err());
-        assert!(parse(&OK.replace("cs2.exe", r"C:\games\cs2.exe")).is_err());
         assert!(parse(&OK.replace("Footsteps", "Füße")).is_err());
     }
 
@@ -209,6 +251,31 @@ mod tests {
         for bad in ["cs2.txt", "eql-.txt", "eql-CS2.txt", "eql-cs2.txt.exe", "eql-../x.txt"] {
             assert!(!valid_file_name(bad), "{bad}");
         }
+    }
+
+    #[test]
+    fn parses_index() {
+        let toml = r#"
+            [[presets]]
+            file = "eql-a.txt"
+            name = "A"
+            votes = 1
+            vote_url = "https://github.com/luanfernandes/eqloadout/issues/3"
+            [[presets]]
+            file = "eql-b.txt"
+            name = "B"
+            game = "Game"
+            votes = 5
+            vote_url = "https://evil.example/phish"
+            [[presets]]
+            file = "../../config.txt"
+            name = "bad"
+        "#;
+        let list = parse_index(toml).unwrap();
+        assert_eq!(list.iter().map(|e| e.file.as_str()).collect::<Vec<_>>(), ["eql-b.txt", "eql-a.txt"]);
+        assert_eq!(list[0].vote_url, None);
+        assert!(list[1].vote_url.is_some());
+        assert!(parse_index("presets = 5").is_err());
     }
 
     /// Every preset shipped in the repo must pass the same check the app applies to downloads.

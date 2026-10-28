@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: THE FINALS
-# exe: Discovery.exe
 # steam_appid: 2073850
 # notes: Heavy destruction low end is cut harder.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

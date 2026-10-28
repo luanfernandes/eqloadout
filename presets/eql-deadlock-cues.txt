@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps and ability cues
 # game: Deadlock
-# exe: deadlock.exe
 # steam_appid: 1422450
 # notes: Hero-shooter shape with a small low-end trim for teamfight clutter.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

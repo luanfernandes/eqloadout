@@ -1,6 +1,10 @@
 # Game presets
 
-Starter EQ presets for EQ Loadout. Each one is a plain Equalizer APO file, so you can also copy it into your Equalizer APO config folder by hand and pick it in a rule.
+Community EQ presets for EQ Loadout. Each one is a plain Equalizer APO file.
+
+- **Get them:** in EQ Loadout, open **Settings → Get presets...**, select one and click **Download**. The file goes into your Equalizer APO config folder. Then add a rule for your game and pick the file as its profile. You can also copy files from this folder by hand.
+- **Vote:** every preset has a [vote issue](https://github.com/luanfernandes/eqloadout/issues?q=label%3Apreset-vote). React with 👍 to vote. Votes are counted once a day and set the order of the **Get presets** list.
+- **Submit your own:** [open a preset submission](https://github.com/luanfernandes/eqloadout/issues/new?template=preset.yml), or send a pull request that adds a file here.
 
 **These presets go on top of your headphone correction.** They don't fix your headphones. They only shift the balance toward what matters in a game, like footsteps. Keep your headphone EQ (for example an [AutoEq](https://github.com/jaakkopasanen/AutoEq) profile) in `config.txt` before `Include: game.txt`.
 
@@ -38,7 +42,6 @@ They are starting points built from common advice (see Sources), not measured or
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Counter-Strike 2
-# exe: cs2.exe
 # steam_appid: 730
 # notes: Trims low boom and mud, lifts footstep scuffs at 2-4 kHz.
 Preamp: -2.0 dB
@@ -46,7 +49,8 @@ Filter: ON LS Fc 160 Hz Gain -2.5 dB Q 0.70
 Filter: ON PK Fc 4000 Hz Gain 2.0 dB Q 1.20
 ```
 
-- The first line must be `# eqloadout-preset: 1`. `name` is required. `game` is required except for `eql-genre-*` presets. `exe` is a comma-separated list of exe file names. Equalizer APO ignores these comment lines.
+- The first line must be `# eqloadout-preset: 1`. `name` is required. `game` is required except for `eql-genre-*` presets. `steam_appid` and `notes` are optional. Equalizer APO ignores these comment lines.
+- Presets are never linked to a game automatically. You choose which rule uses which preset.
 - File names look like `eql-<game>-<focus>.txt`: lowercase letters, digits and dashes. The `eql-` prefix keeps them from colliding with files already in your config folder.
 
 ## Safety rules
@@ -60,7 +64,11 @@ Equalizer APO config lines can do more than EQ. `VSTPlugin` loads a DLL into the
 
 Every other line is rejected. That includes `VSTPlugin`, `Include`, `Device`, `Eval`, `If`, `Copy`, `Channel`, and `LP`/`HP` filters. There are also limits: at most 32 filters, 8 KB and ASCII only. The `Preamp` must cover the largest boost, so a preset can't make your audio clip.
 
-`cargo test` checks every file in this folder against these rules. EQ Loadout runs the same check on anything it downloads.
+`cargo test` checks every file in this folder against these rules, and CI runs it on every pull request. EQ Loadout runs the same check on anything it downloads.
+
+## How publishing works
+
+[`.github/workflows/presets.yml`](../.github/workflows/presets.yml) runs on every push to `main` and once a night. It runs the tests, opens a vote issue for any new preset, counts 👍 reactions, and publishes `index.toml` with the preset files to GitHub Pages. EQ Loadout reads that index.
 
 ## Sources
 

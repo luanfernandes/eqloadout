@@ -2,7 +2,7 @@
 # name: Footsteps
 # game: Arena Breakout: Infinite
 # steam_appid: 2073620
-# notes: Footsteps reported around 1.4-1.8 kHz (low-confidence source). Exe name not verified yet.
+# notes: Footsteps reported around 1.4-1.8 kHz (low-confidence source).
 # Apply on top of your headphone correction. Starting point: adjust by ear.
 Preamp: -2.5 dB
 Filter: ON LS Fc 100 Hz Gain -3.0 dB Q 0.70

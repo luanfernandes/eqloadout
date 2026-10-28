@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Counter-Strike 2
-# exe: cs2.exe
 # steam_appid: 730
 # notes: Trims low boom and mud, lifts footstep scuffs at 2-4 kHz.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

@@ -1,6 +1,7 @@
 // Keep in sync with src/ui.rs
 #define IDD_SETTINGS 100
 #define IDD_RULE 101
+#define IDD_PRESETS 102
 
 #define IDC_DIR 1001
 #define IDC_BROWSE 1002
@@ -12,6 +13,13 @@
 #define IDC_DOWN 1008
 #define IDC_DEFAULT 1009
 #define IDC_STATUS 1010
+#define IDC_GET_PRESETS 1011
+
+#define IDC_PRESET_LIST 1201
+#define IDC_PRESET_NOTES 1202
+#define IDC_PRESET_STATUS 1203
+#define IDC_PRESET_DOWNLOAD 1204
+#define IDC_PRESET_VOTE 1205
 
 #define IDC_EXE 1101
 #define IDC_PICKEXE 1102

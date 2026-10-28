@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Battlefield 6
-# exe: bf6.exe
 # steam_appid: 2807960
 # notes: Milder version of a community BF6 curve: cut below 130 Hz and top-end noise, lift mids.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

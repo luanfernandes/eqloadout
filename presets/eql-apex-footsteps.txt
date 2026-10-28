@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Apex Legends
-# exe: r5apex.exe, r5apex_dx12.exe
 # steam_appid: 1172470
 # notes: Apex is crowded below 100 Hz by abilities; footsteps sit higher (2-8 kHz).
 # Apply on top of your headphone correction. Starting point: adjust by ear.

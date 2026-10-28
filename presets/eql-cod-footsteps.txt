@@ -1,7 +1,6 @@
 # eqloadout-preset: 1
 # name: Footsteps
 # game: Call of Duty (Black Ops 6 / Warzone)
-# exe: cod.exe
 # steam_appid: 1938090
 # notes: Strong low cut for explosions, main lift near 2.85 kHz.
 # Apply on top of your headphone correction. Starting point: adjust by ear.

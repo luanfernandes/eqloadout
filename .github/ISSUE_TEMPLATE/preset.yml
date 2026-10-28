@@ -1,0 +1,57 @@
+name: Submit a preset
+description: Share an EQ preset for a game. It is reviewed, then added to the preset list.
+title: "Preset: <game> - <focus>"
+labels: [preset-submission]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Presets go **on top of headphone correction**: tune them with your headphone EQ (for example AutoEq) already active, so they work for everyone.
+        Only these lines are accepted: one `Preamp:` (covering your largest boost), `Filter: ON PK|LS|HS Fc <Hz> Hz Gain <dB> dB Q <q>` and `GraphicEQ:`. Gains stay within ±12 dB. See [the preset rules](https://github.com/luanfernandes/eqloadout/tree/main/presets#safety-rules).
+  - type: input
+    id: game
+    attributes:
+      label: Game
+      placeholder: Counter-Strike 2
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Preset name
+      description: What it focuses on.
+      placeholder: Footsteps
+    validations:
+      required: true
+  - type: textarea
+    id: preset
+    attributes:
+      label: Preset lines
+      render: text
+      placeholder: |
+        Preamp: -2.0 dB
+        Filter: ON LS Fc 160 Hz Gain -2.5 dB Q 0.70
+        Filter: ON PK Fc 4000 Hz Gain 2.0 dB Q 1.20
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: What it does and how you tested it
+      placeholder: Cuts explosion rumble, lifts footstep scuffs. Tested in deathmatch with a friend walking around.
+    validations:
+      required: true
+  - type: input
+    id: headphones
+    attributes:
+      label: Headphones and correction used
+      placeholder: Sennheiser HD 600 with AutoEq Harman target
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Checks
+      options:
+        - label: I tuned this on top of headphone correction, not on raw headphones.
+          required: true
+        - label: I'm fine with this preset being shared under the project's MIT license.
+          required: true

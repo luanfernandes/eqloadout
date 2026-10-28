@@ -47,11 +47,13 @@ When nothing matches, it writes your default profile, or a comment line if you h
 
    You can also do this in Explorer: Properties → Security → Edit → your user → Modify. Without this permission, the settings window shows "Cannot write game.txt".
 
-3. **Create profiles.** A profile is any `.txt` file in the config folder that contains Equalizer APO filter lines, for example `cs2.txt`:
+3. **Get or create profiles.** A profile is any `.txt` file in the config folder that contains Equalizer APO filter lines, for example `cs2.txt`:
 
    ```
    Filter: ON PK Fc 4000 Hz Gain 3 dB Q 1.4
    ```
+
+   Or download a community preset with **Settings → Get presets...** (see [Presets](#presets)).
 
 4. **Run EQ Loadout.** Download `eqloadout.exe` from [Releases](https://github.com/luanfernandes/eqloadout/releases), copy it somewhere permanent and run it. Right-click the tray icon to open **Settings** and add rules. Turn on **Start with Windows** from the same menu. It adds a value under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` that points at the exe you enabled it from.
 
@@ -66,6 +68,15 @@ The rule dialog helps you fill in the fields:
 - **Select exe...** opens a file picker. It starts in your Steam library's `steamapps\common` folder if Steam is installed.
 
 Store apps and Game Pass games run inside `ApplicationFrameHost.exe`. EQ Loadout resolves the app behind that host, so rules use the real exe name.
+
+## Presets
+
+The [`presets/`](presets) folder holds community EQ presets for games such as CS2, Valorant, Rainbow Six Siege, Apex and Tarkov, plus genre presets (cinematic, dialogue, racing and more). They go on top of your headphone correction.
+
+- **Settings → Get presets...** lists them with the most voted first, and downloads one into your config folder. Then pick it as a rule's profile. EQ Loadout checks every download and only accepts plain EQ lines, never plugins or includes.
+- Vote with 👍 on a preset's [vote issue](https://github.com/luanfernandes/eqloadout/issues?q=label%3Apreset-vote), or [submit your own](https://github.com/luanfernandes/eqloadout/issues/new?template=preset.yml).
+
+See [presets/README.md](presets/README.md) for the format and the safety rules.
 
 ## Configuration file
 
@@ -110,6 +121,7 @@ eqloadout --list-apps
 - [ ] Pause from the tray: the tray icon turns grey, the default is written once and focus changes are ignored. Resume: the icon turns green and the current window is matched again.
 - [ ] Unwritable config folder (remove the Modify permission): the tray icon turns amber, the settings status line and the tooltip say the folder needs Modify permission, and the app keeps running.
 - [ ] Missing profile file (rename a rule's profile): the default is applied, the tray icon turns amber and a warning appears in the tooltip and the settings window.
+- [ ] Get presets: the list loads with the most voted first. Download saves the file into the config folder, it appears in the profile dropdowns, and downloading it again says it's up to date. Offline: the dialog shows a connection error and the app keeps running.
 - [ ] Start a second copy: the settings window of the running copy opens.
 - [ ] Quit: `game.txt` is commented out.
 
