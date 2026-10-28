@@ -1,0 +1,23 @@
+// Keep in sync with src/ui.rs
+#define IDD_SETTINGS 100
+#define IDD_RULE 101
+
+#define IDC_DIR 1001
+#define IDC_BROWSE 1002
+#define IDC_RULES 1003
+#define IDC_ADD 1004
+#define IDC_EDIT 1005
+#define IDC_REMOVE 1006
+#define IDC_UP 1007
+#define IDC_DOWN 1008
+#define IDC_DEFAULT 1009
+#define IDC_STATUS 1010
+
+#define IDC_EXE 1101
+#define IDC_PICKEXE 1102
+#define IDC_TITLE 1103
+#define IDC_PROFILE 1104
+#define IDC_APPS 1105
+#define IDC_REFRESH 1106
+#define IDC_CAPTURE 1107
+#define IDC_CAPTURE_STATUS 1108
