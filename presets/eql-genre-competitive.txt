@@ -1,0 +1,10 @@
+# eqloadout-preset: 1
+# name: Competitive shooter (generic)
+# game: (any)
+# notes: For shooters without their own preset.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.5 dB
+Filter: ON LS Fc 120 Hz Gain -3.0 dB Q 0.70
+Filter: ON PK Fc 400 Hz Gain -1.5 dB Q 1.00
+Filter: ON PK Fc 2500 Hz Gain 2.5 dB Q 1.00
+Filter: ON PK Fc 5000 Hz Gain 1.5 dB Q 1.50

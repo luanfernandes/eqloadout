@@ -1,0 +1,11 @@
+# eqloadout-preset: 1
+# name: Footsteps
+# game: PUBG: Battlegrounds
+# exe: TslGame.exe
+# steam_appid: 578080
+# notes: Focused lift around 2 kHz plus a little detail near 6 kHz.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -3.0 dB
+Filter: ON LS Fc 120 Hz Gain -3.0 dB Q 0.70
+Filter: ON PK Fc 2100 Hz Gain 3.0 dB Q 1.40
+Filter: ON PK Fc 6300 Hz Gain 1.5 dB Q 1.00

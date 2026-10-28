@@ -1,0 +1,11 @@
+# eqloadout-preset: 1
+# name: Footsteps and ability cues
+# game: Marvel Rivals
+# exe: Marvel-Win64-Shipping.exe
+# steam_appid: 2767030
+# notes: Hero-shooter shape: keep the low cues, lift presence.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.0 dB
+Filter: ON PK Fc 350 Hz Gain -1.0 dB Q 1.00
+Filter: ON PK Fc 2500 Hz Gain 2.0 dB Q 1.00
+Filter: ON HS Fc 8000 Hz Gain 1.0 dB Q 0.70

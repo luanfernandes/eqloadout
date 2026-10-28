@@ -1,0 +1,12 @@
+# eqloadout-preset: 1
+# name: Footsteps
+# game: Counter-Strike 2
+# exe: cs2.exe
+# steam_appid: 730
+# notes: Trims low boom and mud, lifts footstep scuffs at 2-4 kHz.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.0 dB
+Filter: ON LS Fc 160 Hz Gain -2.5 dB Q 0.70
+Filter: ON PK Fc 350 Hz Gain -1.5 dB Q 1.00
+Filter: ON PK Fc 2000 Hz Gain 1.5 dB Q 1.00
+Filter: ON PK Fc 4000 Hz Gain 2.0 dB Q 1.20

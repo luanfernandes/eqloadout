@@ -1,0 +1,9 @@
+# eqloadout-preset: 1
+# name: Racing
+# game: (any)
+# notes: Engine body around 60-250 Hz, slightly cleaner mids.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.5 dB
+Filter: ON PK Fc 120 Hz Gain 2.5 dB Q 0.80
+Filter: ON PK Fc 400 Hz Gain -1.0 dB Q 1.00
+Filter: ON PK Fc 3000 Hz Gain 1.0 dB Q 1.00

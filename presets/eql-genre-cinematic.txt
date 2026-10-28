@@ -1,0 +1,9 @@
+# eqloadout-preset: 1
+# name: Cinematic
+# game: (any)
+# notes: Single-player and open-world games: a little more weight and air.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.0 dB
+Filter: ON LS Fc 80 Hz Gain 2.0 dB Q 0.70
+Filter: ON PK Fc 3000 Hz Gain 1.0 dB Q 1.00
+Filter: ON HS Fc 10000 Hz Gain 1.5 dB Q 0.70

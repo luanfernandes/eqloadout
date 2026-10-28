@@ -1,0 +1,11 @@
+# eqloadout-preset: 1
+# name: Footsteps
+# game: Hunt: Showdown 1896
+# exe: HuntGame.exe
+# steam_appid: 594650
+# notes: Footsteps vary a lot by surface (wood is low), so this stays gentle.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.0 dB
+Filter: ON LS Fc 70 Hz Gain -2.5 dB Q 0.70
+Filter: ON PK Fc 250 Hz Gain 1.0 dB Q 1.00
+Filter: ON PK Fc 3000 Hz Gain 2.0 dB Q 0.90

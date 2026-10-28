@@ -1,0 +1,11 @@
+# eqloadout-preset: 1
+# name: Footsteps and ability cues
+# game: Overwatch 2
+# exe: Overwatch.exe
+# steam_appid: 2357570
+# notes: Ability cues live below 250 Hz, so no bass cut, only a presence lift.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -2.0 dB
+Filter: ON PK Fc 350 Hz Gain -1.0 dB Q 1.00
+Filter: ON PK Fc 2500 Hz Gain 2.0 dB Q 1.00
+Filter: ON HS Fc 8000 Hz Gain 1.0 dB Q 0.70
