@@ -95,8 +95,8 @@ for votes, name, m, url in entries:
     vote = f'<a class="small" href="{html.escape(url)}">Vote 👍</a>' if url else ""
     search = html.escape(f"{game} {m['name']} {m.get('notes', '')}".lower())
     rows.append(
-        f'      <article class="preset" data-search="{search}"><div class="game">{html.escape(game)}</div>'
-        f'<h3>{html.escape(m["name"])}</h3><p>{html.escape(m.get("notes", ""))}</p>'
+        f'      <article class="preset" data-search="{search}"><h3>{html.escape(game)}</h3>'
+        f'<div class="label">{html.escape(m["name"])}</div><p>{html.escape(m.get("notes", ""))}</p>'
         f'<div class="row"><span class="votes"><b>{votes}</b> votes</span>{vote}'
         f'<a class="small" href="{name}" download>Download</a></div></article>'
     )
