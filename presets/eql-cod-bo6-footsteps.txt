@@ -1,0 +1,21 @@
+# eqloadout-preset: 1
+# name: Footsteps (detailed)
+# game: Call of Duty: Black Ops 6
+# steam_appid: 1938090
+# notes: By u/Riggz211 on r/blackops6, found with spectrum analysers and Audacity; txt export by u/Pikalima. Zero-gain bands, HP and LP dropped. Source: reddit.com/r/blackops6/comments/1ggeq8k
+# credit: u/Riggz211 (original), u/Pikalima (txt export). Original version of the post; the author later posted an updated one for wider headset compatibility.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -6.0 dB
+Filter: ON PK Fc 60 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 85 Hz Gain -6.0 dB Q 7.00
+Filter: ON PK Fc 100 Hz Gain 6.0 dB Q 4.00
+Filter: ON PK Fc 136 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 250 Hz Gain 4.0 dB Q 6.00
+Filter: ON PK Fc 330 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 500 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 850 Hz Gain 4.0 dB Q 4.00
+Filter: ON PK Fc 1206 Hz Gain -2.0 dB Q 3.00
+Filter: ON PK Fc 2000 Hz Gain 4.0 dB Q 4.00
+Filter: ON PK Fc 4000 Hz Gain -3.0 dB Q 10.00
+Filter: ON PK Fc 5000 Hz Gain 3.0 dB Q 6.00
+Filter: ON PK Fc 8000 Hz Gain 3.0 dB Q 6.00

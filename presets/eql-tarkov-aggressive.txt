@@ -1,0 +1,14 @@
+# eqloadout-preset: 1
+# name: Aggressive cuts
+# game: Escape from Tarkov
+# notes: By u/RodneyWhoosh on r/EscapefromTarkov: their SteelSeries Sonar EQ for Tarkov. Aggressive (-12 dB cuts at 780 Hz and 950 Hz, +6.7 dB at 1.3 kHz). Source: reddit.com/r/EscapefromTarkov/comments/13v8cmo
+# credit: u/RodneyWhoosh (r/EscapefromTarkov). They pair this with a compressor/limiter (not included: plugins are not allowed in presets). Their post also lists problem frequencies to cut: 260, 780, 2367, 5600 and 14062 Hz.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -6.7 dB
+Filter: ON LS Fc 51.3 Hz Gain -12.0 dB Q 0.71
+Filter: ON PK Fc 100.6 Hz Gain 2.8 dB Q 0.71
+Filter: ON PK Fc 266.9 Hz Gain -3.6 dB Q 0.86
+Filter: ON PK Fc 778.8 Hz Gain -12.0 dB Q 0.50
+Filter: ON PK Fc 949.4 Hz Gain -12.0 dB Q 0.82
+Filter: ON PK Fc 1290 Hz Gain 6.7 dB Q 1.97
+Filter: ON HS Fc 9660 Hz Gain -12.0 dB Q 0.66

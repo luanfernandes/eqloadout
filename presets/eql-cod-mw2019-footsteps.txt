@@ -1,0 +1,13 @@
+# eqloadout-preset: 1
+# name: Footsteps (Flat mix)
+# game: Call of Duty: Modern Warfare (2019)
+# notes: By u/noSBMM on r/modernwarfare: 10-band graphic EQ for the Flat audio mix, converted to peaking filters at Q 1.41. Mostly cuts. Source: reddit.com/r/modernwarfare/comments/d78j62
+# credit: u/noSBMM (r/modernwarfare). Tested by the author on SoundBlaster G6 with HD 599, G4me One and M40x. Original is a graphic EQ; Q 1.41 is an octave-wide approximation.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -1.0 dB
+Filter: ON PK Fc 32 Hz Gain -6.0 dB Q 1.41
+Filter: ON PK Fc 62 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 250 Hz Gain -4.0 dB Q 1.41
+Filter: ON PK Fc 500 Hz Gain -1.0 dB Q 1.41
+Filter: ON PK Fc 8000 Hz Gain 1.0 dB Q 1.41
+Filter: ON PK Fc 16000 Hz Gain -2.0 dB Q 1.41

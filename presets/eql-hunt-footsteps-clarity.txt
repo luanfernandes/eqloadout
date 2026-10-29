@@ -1,0 +1,16 @@
+# eqloadout-preset: 1
+# name: Footsteps clarity
+# game: Hunt: Showdown 1896
+# steam_appid: 594650
+# notes: By u/KrucyG on r/HuntShowdown: less boxiness and mud, more high-frequency detail. Tuned on 7Hz x Crinacle Zero 2 IEMs. Source: reddit.com/r/HuntShowdown/comments/1e0z65y
+# credit: u/KrucyG (r/HuntShowdown). Author tuned this by ear on IEMs, so treat it as a starting point.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -4.0 dB
+Filter: ON PK Fc 20 Hz Gain -1.5 dB Q 1.00
+Filter: ON PK Fc 60 Hz Gain -1.0 dB Q 0.50
+Filter: ON PK Fc 150 Hz Gain 2.0 dB Q 1.00
+Filter: ON PK Fc 200 Hz Gain -2.0 dB Q 0.50
+Filter: ON PK Fc 750 Hz Gain 1.5 dB Q 0.50
+Filter: ON PK Fc 2800 Hz Gain 1.0 dB Q 1.50
+Filter: ON PK Fc 3500 Hz Gain -3.0 dB Q 2.00
+Filter: ON PK Fc 5000 Hz Gain 4.0 dB Q 2.00

@@ -1,0 +1,14 @@
+# eqloadout-preset: 1
+# name: Footsteps
+# game: Arc Raiders
+# steam_appid: 1808500
+# notes: By u/Sheldonshotty on r/ArcRaiders: peaks of analyzed footstep clips boosted at 223 Hz to 9.8 kHz, 4.7 kHz notch. Source: reddit.com/r/ArcRaiders/comments/1r9jqrp
+# credit: u/Sheldonshotty (r/ArcRaiders, r/headphones). Values copied as posted.
+# Apply on top of your headphone correction. Starting point: adjust by ear.
+Preamp: -3.6 dB
+Filter: ON PK Fc 222.9 Hz Gain 3.6 dB Q 1.25
+Filter: ON PK Fc 379.6 Hz Gain 2.6 dB Q 1.83
+Filter: ON PK Fc 1174.6 Hz Gain 1.1 dB Q 4.37
+Filter: ON PK Fc 4666.1 Hz Gain -1.0 dB Q 6.00
+Filter: ON PK Fc 6750.4 Hz Gain 3.5 dB Q 3.59
+Filter: ON PK Fc 9765.8 Hz Gain 3.0 dB Q 5.87

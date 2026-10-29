@@ -8,7 +8,7 @@ Community EQ presets for EQ Loadout. Each one is a plain Equalizer APO file.
 
 **These presets go on top of your headphone correction.** They don't fix your headphones. They only shift the balance toward what matters in a game, like footsteps. Keep your headphone EQ (for example an [AutoEq](https://github.com/jaakkopasanen/AutoEq) profile) in `config.txt` before `Include: game.txt`.
 
-They are starting points built from common advice (see Sources), not measured or tested curves. Tune them by ear: have a friend walk around you in a custom match, or replay a demo.
+They are starting points built from common advice (see Sources), not measured or tested curves. Presets marked (community) copy the values one player posted; each file's notes credit the author and link the post. Tune them by ear: have a friend walk around you in a custom match, or replay a demo.
 
 ## Presets
 
@@ -29,6 +29,11 @@ They are starting points built from common advice (see Sources), not measured or
 | `eql-marvelrivals-cues.txt` | Marvel Rivals | Footsteps and ability cues |
 | `eql-deadlock-cues.txt` | Deadlock | Footsteps and ability cues |
 | `eql-abi-footsteps.txt` | Arena Breakout: Infinite | Footsteps |
+| `eql-arcraiders-footsteps.txt` | Arc Raiders | Footsteps (community) |
+| `eql-cod-bo6-footsteps.txt` | Call of Duty: Black Ops 6 | Footsteps (community) |
+| `eql-cod-mw2019-footsteps.txt` | Call of Duty: Modern Warfare (2019) | Footsteps, Flat mix (community) |
+| `eql-hunt-footsteps-clarity.txt` | Hunt: Showdown 1896 | Footsteps clarity (community) |
+| `eql-tarkov-aggressive.txt` | Escape from Tarkov | Strong mid cuts (community) |
 | `eql-genre-competitive.txt` | Any shooter | Footsteps |
 | `eql-genre-cinematic.txt` | Single-player, open world | Weight and air |
 | `eql-genre-dialogue.txt` | Story games, RPGs | Voice clarity |
@@ -77,3 +82,4 @@ The starter values follow advice that recurs across these sources, then are kept
 - Steam discussions: [Hunt: Showdown EQ](https://steamcommunity.com/app/594650/discussions/8/3844431603856400627), [Rainbow Six Siege footstep frequencies](https://steamcommunity.com/app/359550/discussions/0/1634166237654286859)
 - EA forums: [Apex sound EQ](https://forums.ea.com/discussions/apex-legends-general-discussion-en/improve-in-game-sounds---how-to/5676306/replies/5676363), [Battlefield 6 footsteps](https://forums.ea.com/discussions/battlefield-6-general-discussion-en/i-found-a-way-to-fix-the-footstep-sounds/12831794/replies/13365640)
 - Guides: [Evetech on footstep frequencies](https://evezone.evetech.co.za/quick-bytes/eq-for-footsteps-the-frequencies-that-actually-matter), [Elgato EQ guide](https://marketplace.elgato.com/learn/inspiration/elgato-equalizer-step-up-your-game), [SteelSeries BO6/Warzone EQ](https://steelseries.com/blog/best-sonar-eq-settings-to-hear-footsteps-in-black-ops-6-warzone-1174), [FxSound PUBG thread](https://forum.fxsound.com/t/hi-need-help-with-a-eq-setting-pubg/2304)
+- Reddit posts for the community presets: [Arc Raiders](https://www.reddit.com/r/ArcRaiders/comments/1r9jqrp), [Black Ops 6](https://www.reddit.com/r/blackops6/comments/1ggeq8k), [Modern Warfare 2019](https://www.reddit.com/r/modernwarfare/comments/d78j62), [Hunt: Showdown](https://www.reddit.com/r/HuntShowdown/comments/1e0z65y), [Escape from Tarkov](https://www.reddit.com/r/EscapefromTarkov/comments/13v8cmo)
