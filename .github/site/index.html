@@ -74,6 +74,7 @@
   .toolbar input:focus { outline: 2px solid var(--signal); outline-offset: 1px; }
   .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .preset { display: flex; flex-direction: column; gap: 8px; background: var(--slot); border: 1px solid var(--rim); border-radius: 14px; padding: 18px; }
+  .preset[hidden] { display: none; } /* display:flex above would override the hidden attribute */
   .preset .game { font-size: 12.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
   .preset h3 { margin: 0; font-size: 17px; }
   .preset p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
